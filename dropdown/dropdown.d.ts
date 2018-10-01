@@ -47,7 +47,7 @@ export declare class NgbDropdown implements OnInit, OnDestroy {
     private _closed$;
     private _zoneSubscription;
     private _menu;
-    private _menuRef;
+    private _menuElementRef;
     private _anchor;
     /**
      * Indicates that dropdown should be closed when selecting one of dropdown items (click) or pressing ESC.
@@ -97,7 +97,6 @@ export declare class NgbDropdown implements OnInit, OnDestroy {
     private _isEventFromToggle($event);
     private _isEventFromMenu($event);
     private _positionMenu();
-    private getActiveElmIndex(list);
-    keyboardEvent($event: any): boolean;
+    onKeyDown(event: KeyboardEvent): boolean;
     private getMenuElements();
 }
