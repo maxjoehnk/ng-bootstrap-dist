@@ -1,6 +1,15 @@
-import { EventEmitter, ElementRef, NgZone, Renderer2, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { EventEmitter, ElementRef, NgZone, Renderer2, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { NgbDropdownConfig } from './dropdown-config';
 import { PlacementArray, Placement } from '../util/positioning';
+/**
+ */
+export declare class NgbDropdownItem {
+    private _elementRef;
+    dropdownItemEl: HTMLElement;
+    private _disabled;
+    constructor(_elementRef: ElementRef<HTMLElement>);
+    readonly disabled: boolean;
+}
 /**
  */
 export declare class NgbDropdownMenu {
@@ -9,6 +18,7 @@ export declare class NgbDropdownMenu {
     private _renderer;
     placement: Placement;
     isOpen: boolean;
+    menuItems: NgbDropdownItem[];
     constructor(dropdown: any, _elementRef: ElementRef<HTMLElement>, _renderer: Renderer2);
     isEventFrom($event: any): boolean;
     position(triggerEl: any, placement: any): void;
@@ -40,7 +50,7 @@ export declare class NgbDropdownToggle extends NgbDropdownAnchor {
 /**
  * Transforms a node into a dropdown.
  */
-export declare class NgbDropdown implements OnInit, OnDestroy {
+export declare class NgbDropdown implements AfterViewInit, OnInit, OnDestroy {
     private _changeDetector;
     private _document;
     private _ngZone;
@@ -75,6 +85,7 @@ export declare class NgbDropdown implements OnInit, OnDestroy {
     openChange: EventEmitter<{}>;
     constructor(_changeDetector: ChangeDetectorRef, config: NgbDropdownConfig, _document: any, _ngZone: NgZone);
     ngOnInit(): void;
+    ngAfterViewInit(): void;
     /**
      * Checks if the dropdown menu is open or not.
      */
@@ -97,6 +108,7 @@ export declare class NgbDropdown implements OnInit, OnDestroy {
     private _isEventFromToggle($event);
     private _isEventFromMenu($event);
     private _positionMenu();
-    onKeyDown(event: KeyboardEvent): boolean;
-    private getMenuElements();
+    private _setKeyboardHandlers();
+    onKeyDown(event: KeyboardEvent): void;
+    private _getMenuElements();
 }
