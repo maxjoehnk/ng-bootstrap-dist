@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef, NgZone, Renderer2, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { EventEmitter, ElementRef, NgZone, Renderer2, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit, QueryList } from '@angular/core';
 import { NgbDropdownConfig } from './dropdown-config';
 import { PlacementArray, Placement } from '../util/positioning';
 /**
@@ -18,7 +18,7 @@ export declare class NgbDropdownMenu {
     private _renderer;
     placement: Placement;
     isOpen: boolean;
-    menuItems: NgbDropdownItem[];
+    menuItems: QueryList<NgbDropdownItem>;
     constructor(dropdown: any, _elementRef: ElementRef<HTMLElement>, _renderer: Renderer2);
     isEventFrom($event: any): boolean;
     position(triggerEl: any, placement: any): void;
@@ -54,8 +54,10 @@ export declare class NgbDropdown implements AfterViewInit, OnInit, OnDestroy {
     private _changeDetector;
     private _document;
     private _ngZone;
+    private _elementRef;
     private _closed$;
     private _zoneSubscription;
+    private _keyboardSubscription;
     private _menu;
     private _menuElementRef;
     private _anchor;
@@ -83,7 +85,7 @@ export declare class NgbDropdown implements AfterViewInit, OnInit, OnDestroy {
      *  Event's payload equals whether dropdown is open.
      */
     openChange: EventEmitter<{}>;
-    constructor(_changeDetector: ChangeDetectorRef, config: NgbDropdownConfig, _document: any, _ngZone: NgZone);
+    constructor(_changeDetector: ChangeDetectorRef, config: NgbDropdownConfig, _document: any, _ngZone: NgZone, _elementRef: ElementRef<HTMLElement>);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     /**
@@ -110,5 +112,6 @@ export declare class NgbDropdown implements AfterViewInit, OnInit, OnDestroy {
     private _positionMenu();
     private _setKeyboardHandlers();
     onKeyDown(event: KeyboardEvent): void;
+    private _isDropup();
     private _getMenuElements();
 }
