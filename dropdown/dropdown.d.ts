@@ -1,14 +1,13 @@
-import { EventEmitter, ElementRef, NgZone, Renderer2, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit, QueryList } from '@angular/core';
+import { EventEmitter, ElementRef, NgZone, Renderer2, OnInit, OnDestroy, ChangeDetectorRef, QueryList } from '@angular/core';
 import { NgbDropdownConfig } from './dropdown-config';
 import { PlacementArray, Placement } from '../util/positioning';
 /**
  */
 export declare class NgbDropdownItem {
-    private _elementRef;
-    dropdownItemEl: HTMLElement;
+    elementRef: ElementRef<HTMLElement>;
     private _disabled;
-    constructor(_elementRef: ElementRef<HTMLElement>);
-    readonly disabled: boolean;
+    disabled: boolean;
+    constructor(elementRef: ElementRef<HTMLElement>);
 }
 /**
  */
@@ -50,14 +49,13 @@ export declare class NgbDropdownToggle extends NgbDropdownAnchor {
 /**
  * Transforms a node into a dropdown.
  */
-export declare class NgbDropdown implements AfterViewInit, OnInit, OnDestroy {
+export declare class NgbDropdown implements OnInit, OnDestroy {
     private _changeDetector;
     private _document;
     private _ngZone;
     private _elementRef;
     private _closed$;
     private _zoneSubscription;
-    private _keyboardSubscription;
     private _menu;
     private _menuElementRef;
     private _anchor;
@@ -87,7 +85,6 @@ export declare class NgbDropdown implements AfterViewInit, OnInit, OnDestroy {
     openChange: EventEmitter<{}>;
     constructor(_changeDetector: ChangeDetectorRef, config: NgbDropdownConfig, _document: any, _ngZone: NgZone, _elementRef: ElementRef<HTMLElement>);
     ngOnInit(): void;
-    ngAfterViewInit(): void;
     /**
      * Checks if the dropdown menu is open or not.
      */
@@ -110,8 +107,7 @@ export declare class NgbDropdown implements AfterViewInit, OnInit, OnDestroy {
     private _isEventFromToggle($event);
     private _isEventFromMenu($event);
     private _positionMenu();
-    private _setKeyboardHandlers();
-    onKeyDown(event: KeyboardEvent): void;
+    onKeyDown(event: KeyboardEvent): boolean;
     private _isDropup();
     private _getMenuElements();
 }
